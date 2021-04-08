@@ -33,7 +33,7 @@ This solution is build on top of [Terraform](https://www.terraform.io/), so you 
    tfenv use 0.14.7
    ```
 6. Configure your Terraform state backend  
-   In order to make the deployment stable, it is highly recommend to store your Terraform state file in Amazon S3, or equivalent cloud storage. in `backend.tf` file, you can specify your own amazon S3 bucket.
+   In order to make the deployment stable, it is highly recommend to store your Terraform state file in Amazon S3, or equivalent cloud storage. in `envs/dev/backend.tf` file, you can specify your own amazon S3 bucket.
    ```HCL
     terraform {
         backend "s3" {
@@ -43,15 +43,23 @@ This solution is build on top of [Terraform](https://www.terraform.io/), so you 
         }
     }   
    ```
-7. Initialize Terraform  
+7. Configure your the AWS region to deploy  
+   In `envs/dev/provider.tf` file, 
+   ```HCL
+   provider "aws" {
+      region = "<YOUR REGION TO DEPLOY>"
+   }
+   ```   
+     
+8. Initialize Terraform  
    ```bash
    terraform init
    ```
-8. Configure **Allowed Domain List**  
+9.  Configure **Allowed Domain List**  
    Now this is the most fun part. In `envs/dev`, you will see `allowed_domains.yml` file. This file is the list to which the application on private subnet to access. You can add, delete the domain list as you want.   
    `IMPORTANT`
    This solution is basically "Allowed List", so the domains that is not on the `allowed_domains.yml`, they are going to be `DENIED`.
-9.  Deploy it.
+11. Deploy it.
     ```bash
     cd envs/dev
     terraform apply
