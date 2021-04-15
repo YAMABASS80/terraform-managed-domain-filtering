@@ -43,3 +43,16 @@ output "private_subnet_1_route_table_id" {
 output "private_subnet_2_route_table_id" {
   value = aws_route_table.private_subnet_2_route_table.id
 }
+output subnet_ids{
+  value=[aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id]
+}
+output route_table_ids{
+  value=[
+    aws_route_table.firewall_subnet_1_route_table.id,
+    aws_route_table.firewall_subnet_2_route_table.id,
+    aws_route_table.public_subnet_1_route_table.id,
+    aws_route_table.public_subnet_2_route_table.id,
+    aws_route_table.private_subnet_1_route_table.id,
+    aws_route_table.private_subnet_2_route_table.id
+  ]
+}

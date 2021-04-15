@@ -30,4 +30,6 @@ resource aws_route to-trgw {
   route_table_id         = var.route_table_ids[count.index]
   transit_gateway_id     = var.transit_gateway_id
   destination_cidr_block = var.destination_vpc_cidr
+
+  depends_on = [aws_ec2_transit_gateway_vpc_attachment.vpc_attachment]
 }
