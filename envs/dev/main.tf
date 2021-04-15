@@ -1,15 +1,55 @@
-module "vpc" {
+module "gw_vpc"{
   source = "../../modules/vpc"
   vpc_cidr_block = var.vpc_cidr_block
 }
 
+module "user_vpc_A" {
+  source = "../../modules/user_vpc"
+  user_vpc = {
+    cidr_block = "100.64.0.0/20"
+    vpc_name = "UserVpcA"
+    subnet_names = [
+      "private_subnet_A0",
+      "private_subnet_A1"
+    ]
+  }
+}
+
+module "user_vpc_B" {
+  source = "../../modules/user_vpc"
+  user_vpc = {
+    cidr_block = "100.64.16.0/20"
+    vpc_name = "UserVpcB"
+    subnet_names = [
+      "private_subnet_B0",
+      "private_subnet_B1"
+    ]
+  }
+}
+
 module "network_firewall_with_nat" {
   source = "../../modules/network_firewall_with_nat"
-  igw_id = module.vpc.igw_id
-  firewall_subnet_az_1 = module.vpc.firewall_subnet_1_id
-  firewall_subnet_az_2 = module.vpc.firewall_subnet_2_id
-  public_subnet_az_1 = module.vpc.public_subnet_1_id
-  public_subnet_az_2 = module.vpc.public_subnet_2_id
-  public_subnet_1_route_table_id = module.vpc.public_subnet_1_route_table_id
-  public_subnet_2_route_table_id = module.vpc.public_subnet_2_route_table_id
+  igw_id = module.gw_vpc.igw_id
+  firewall_subnet_az_1 = module.gw_vpc.firewall_subnet_1_id
+  firewall_subnet_az_2 = module.gw_vpc.firewall_subnet_2_id
+  public_subnet_az_1 = module.gw_vpc.public_subnet_1_id
+  public_subnet_az_2 = module.gw_vpc.public_subnet_2_id
+  public_subnet_1_route_table_id = module.gw_vpc.public_subnet_1_route_table_id
+  public_subnet_2_route_table_id = module.gw_vpc.public_subnet_2_route_table_id
 }
+
+module "tgw" {
+  source = "../../modules/tgw"
+}
+
+module A-attachment {
+  source = "../../modules/tgw_attach"
+  vpc_id                         = module.user_vpc_A.vpc_id
+  subnet_ids                     = module.user_vpc_A.subnet_ids
+  route_table_ids                = module.user_vpc_A.route_table_ids
+  transit_gateway_id             = module.tgw.tgw_id
+  transit_gateway_route_table_id = module.tgw.route_table_id
+  destination_vpc_cidr           = "0.0.0.0/0"
+}
+
+
