@@ -41,35 +41,6 @@ resource "aws_route_table_association" "user_route_association" {
   route_table_id = aws_route_table.user_private_routes[count.index].id
 }
 
-## EC2 Instance
-
-resource "aws_security_group" "sg_ec2" {
-  name        = "sg_ec2_${var.instance.instance_name}"
-  description = "for access test instance"
-  vpc_id = aws_vpc.user_vpc.id
-  ingress {
-      cidr_blocks = ["0.0.0.0/0"]
-      description = "permit response of icmp"
-      protocol = "icmp"
-      from_port = -1
-      to_port = -1
-  }
-}
-
-resource "aws_instance" "ec2" {
-  ami                         = var.instance.ami_id
-  instance_type               = "t2.micro"
-  availability_zone           = aws_subnet.user_private_subnets[0].availability_zone
-  monitoring                  = false
-  associate_public_ip_address = false
-  tags = {
-    Name = var.instance.instance_name
-  }
-  vpc_security_group_ids = [aws_security_group.sg_ec2.id]
-  subnet_id              = aws_subnet.user_private_subnets[0].id
-  iam_instance_profile = var.instance.iam_role
-}
-
 ## SSM Session Manager Endpoints
 
 resource "aws_security_group" "endpoint_sg" {
@@ -111,4 +82,36 @@ resource "aws_vpc_endpoint" "ssmmessages" {
   subnet_ids = [aws_subnet.user_private_subnets[0].id, aws_subnet.user_private_subnets[1].id]
 }
 
+
+
+## EC2 Instance
+
+resource "aws_security_group" "sg_ec2" {
+  name        = "sg_ec2_${var.instance.instance_name}"
+  description = "for access test instance"
+  vpc_id = aws_vpc.user_vpc.id
+  ingress {
+      cidr_blocks = ["0.0.0.0/0"]
+      description = "permit response of icmp"
+      protocol = "icmp"
+      from_port = -1
+      to_port = -1
+  }
+}
+
+resource "aws_instance" "ec2" {
+  ami                         = var.instance.ami_id
+  instance_type               = "t2.micro"
+  availability_zone           = aws_subnet.user_private_subnets[0].availability_zone
+  monitoring                  = false
+  associate_public_ip_address = false
+  tags = {
+    Name = var.instance.instance_name
+  }
+  vpc_security_group_ids = [aws_security_group.sg_ec2.id]
+  subnet_id              = aws_subnet.user_private_subnets[0].id
+  iam_instance_profile = var.instance.iam_role
+
+  depends_on = [aws_vpc_endpoint.ssm, aws_vpc_endpoint.ec2messages, aws_vpc_endpoint.ssmmessages]
+}
 
