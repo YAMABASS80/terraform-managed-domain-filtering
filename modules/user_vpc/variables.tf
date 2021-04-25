@@ -9,3 +9,11 @@ variable user_vpc {
     subnet_names[]
 */
 }
+
+variable "instance" {
+  /*
+    instance_name=<Instance name>
+    ami_id=<AMI ID>
+    iam_role=<IAM Role for Instance>
+  */
+}

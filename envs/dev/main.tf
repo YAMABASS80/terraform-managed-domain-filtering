@@ -13,6 +13,11 @@ module "user_vpc_A" {
       "private_subnet_A1"
     ]
   }
+  instance = {
+    instance_name="Instance_in_VPC_A"
+    ami_id=var.ami_id
+    iam_role=var.iam_role
+  }
 }
 
 module "user_vpc_B" {
@@ -24,6 +29,11 @@ module "user_vpc_B" {
       "private_subnet_B0",
       "private_subnet_B1"
     ]
+  }
+  instance = {
+    instance_name="Instance_in_VPC_B"
+    ami_id=var.ami_id
+    iam_role=var.iam_role
   }
 }
 
