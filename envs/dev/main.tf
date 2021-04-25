@@ -78,6 +78,7 @@ module gwvpc_attachment {
   depends_on = [module.tgw, module.gw_vpc]
 }
 
+# routing from user VPC(A, B) to GW VPC
 module routing_from_uservpc_to_gwvpc {
   source = "../../modules/routing"
   route_table_ids                 = concat(module.user_vpc_A.route_table_ids, module.user_vpc_B.route_table_ids)
@@ -89,6 +90,7 @@ module routing_from_uservpc_to_gwvpc {
   depends_on = [module.user_A_attachment, module.user_B_attachment, module.gwvpc_attachment]
 }
 
+# routing from GW VPC to user VPC A
 module routing_from_gwvpc_to_user_A {
   source = "../../modules/routing"
   route_table_ids                 = module.gw_vpc.route_table_ids
@@ -100,6 +102,7 @@ module routing_from_gwvpc_to_user_A {
   depends_on = [module.user_A_attachment, module.gwvpc_attachment]
 }
 
+# routing from GW VPC to user VPC B
 module routing_from_gwvpc_to_user_B {
   source = "../../modules/routing"
   route_table_ids                 = module.gw_vpc.route_table_ids
