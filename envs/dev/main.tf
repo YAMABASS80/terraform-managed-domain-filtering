@@ -1,5 +1,5 @@
 module "gw_vpc"{
-  source = "../../modules/vpc"
+  source = "../../modules/gw_vpc"
   vpc_cidr_block = var.vpc_cidr_block
 }
 
