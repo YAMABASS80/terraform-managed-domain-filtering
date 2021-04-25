@@ -1,8 +1,7 @@
 # Transit Gateway
 
 # Parameters
-|  Name  |  Type  | Description  |
-| ---- | ---- | ---- |
+No parameters
 
 # Outputs
 |  Name  |  Type  | Description  |

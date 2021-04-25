@@ -10,5 +10,4 @@
 | destination_cidr | string | CIDR as destination |
 
 # Outputs
-|  Name  |  Type  | Description  |
-| ---- | ---- | ---- |
+No outputs
