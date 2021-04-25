@@ -4,10 +4,10 @@
 
 variable vpc_id {}
 variable subnet_ids {}
-variable route_table_ids {}
+#variable route_table_ids {} 
 variable transit_gateway_id {}
 variable transit_gateway_route_table_id {}
-variable destination_vpc_cidr {}
+#variable destination_vpc_cidr {}
 
 resource aws_ec2_transit_gateway_vpc_attachment vpc_attachment {
   subnet_ids                                      = var.subnet_ids
@@ -25,6 +25,7 @@ resource aws_ec2_transit_gateway_route_table_propagation propagation {
   transit_gateway_route_table_id = var.transit_gateway_route_table_id
 }
 
+/*
 resource aws_route to-trgw {
   count = length(var.route_table_ids)
   route_table_id         = var.route_table_ids[count.index]
@@ -32,4 +33,10 @@ resource aws_route to-trgw {
   destination_cidr_block = var.destination_vpc_cidr
 
   depends_on = [aws_ec2_transit_gateway_vpc_attachment.vpc_attachment]
+}
+*/
+
+
+output tgw_attachment_id {
+  value = aws_ec2_transit_gateway_vpc_attachment.vpc_attachment.id
 }
