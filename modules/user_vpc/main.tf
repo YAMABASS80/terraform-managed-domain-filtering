@@ -97,6 +97,12 @@ resource "aws_security_group" "sg_ec2" {
       from_port = -1
       to_port = -1
   }
+  egress {
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+    cidr_blocks     = ["0.0.0.0/0"]
+  }  
 }
 
 resource "aws_instance" "ec2" {
