@@ -53,6 +53,7 @@ This solution is build on top of [Terraform](https://www.terraform.io/), so you 
      
 8. Initialize Terraform  
    ```bash
+   cd envs/dev
    terraform init
    ```
 9.  Configure **Allowed Domain List**  
@@ -61,7 +62,6 @@ This solution is build on top of [Terraform](https://www.terraform.io/), so you 
    This solution is basically "Allowed List", so the domains that is not on the `allowed_domains.yml`, they are going to be `DENIED`.
 11. Deploy it.
     ```bash
-    cd envs/dev
     terraform apply
     ```
 ## Solution Specific Resources
