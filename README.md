@@ -72,3 +72,54 @@ Firewall gateway is a gateway that handle the traffic. It's pretty unique so if 
 ### SSM Endpoints
 Why is here? Because it prevent from being disconnected from your EC2 located on private subnet.   
 If you added some domain related to AWS endpoint in `allowed_domains.yml`, what would happened? You would lose your connection to your app because Firewall Gateway would block the traffic too. In order to prevent this situation, SSM endpoints allow your to bypass Network firewall, so you can keep your connection whatever you did wrong. 
+
+# I/O for each components
+
+Please follow Input and Output following.
+
+## `main.tf` 
+
+<details>
+
+### Variables
+
+| Variable | Type | Description |
+| ------------- | ------------- | ------------- |
+| vpc_cidr_block  | `String`  | Automatically create `/24` subnets in the VPC, so please specify larger CIDR range.  |
+
+### Outputs
+
+| Output | Type | Description |
+| ------------- | ------------- | ------------- |
+| igw  | `String`  | Internet Gateway (IGW) ID. |
+| firewall_subnet_1_id  | `String`  | Firewall subnet ID located in first availability zone. |
+| firewall_subnet_2_id  | `String`  | Firewall subnet ID located in second availability zone. |
+| public_subnet_1_id  | `String`  | Public subnet ID located in first available zone. |
+| public_subnet_2_id  | `String`  | Public subnet ID located in second available zone. |
+| public_subnet_1_route_table_id  | `String`  | Route table ID for public subnet ID located in first available zone. |
+| public_subnet_2_route_table_id  | `String`  | Route table ID for public subnet ID located in second available zone. |
+
+</details>
+
+## `modules/network_firewall_with_nat`
+
+<details>
+
+### Variables
+
+| Variables | Type | Description |
+| ------------- | ------------- | ------------- |
+| igw  | `String`  | Internet Gateway (IGW) ID. |
+| firewall_subnet_az_1  | `String`  | Firewall subnet ID located in first availability zone. |
+| firewall_subnet_az_2  | `String`  | Firewall subnet ID located in second availability zone. |
+| public_subnet_az_1  | `String`  | Public subnet ID located in first available zone. |
+| public_subnet_az_2  | `String`  | Public subnet ID located in second available zone. |
+| public_subnet_1_route_table_id  | `String`  | Route table ID for public subnet ID located in first available zone. |
+| public_subnet_1_route_table_id  | `String`  | Route table ID for public subnet ID located in second available zone. |
+
+### Output
+
+No output defined.
+
+</details>
+
