@@ -64,6 +64,39 @@ This solution is build on top of [Terraform](https://www.terraform.io/), so you 
     ```bash
     terraform apply
     ```
+## How do you play with it
+Once you spin up your resources defined by this Terraform files, you can create your EC2 instance to play with. Now this network assumes EC2 instances are not connected to the internet, you should utilize [AWS SSM Session Manager](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/session-manager.html) to jump in to your test instance.
+
+1. [Install SSM Session Manager Plugin to your AWS CLI](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html)
+
+2. [Set your AWS credential to your environment](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html)
+
+3. [Create IAM Role for EC2 Instance](https://docs.aws.amazon.com/systems-manager/latest/userguide/setup-instance-profile.html)  
+You just create EC2 IAM Role and attache AWS Managed Policy **AmazonSSMManagedInstanceCore**
+
+4. Create your EC2 instances on **private subnet**  
+Note that you don't need to open security group for any SSH port. You can use **default** security group in this case. 
+
+5. Jump in to the test instance
+```bash
+aws ssm start-session --target <YOUR EC2 INSTANCE ID>
+```
+
+Now this is the moment you are probably excited. Once you can jump in to your test box, the easiest way to test it out is to use *curl* command
+
+
+```bash
+curl -vvvv https://www.microsoft.com
+```
+It works. You can get contents from the server but, 
+
+```bash
+curl -vvvv https://www.twitter.com
+```
+In this case you won't get any response from the server. This is because the network firewall blocks the traffic. You can also check the CloudWatch Logs if your traffic is allowed or denied. 
+
+Happy Traffic Control! :-)
+
 ## Solution Specific Resources
 
 ### Firewall Gateway
