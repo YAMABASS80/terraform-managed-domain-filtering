@@ -2,7 +2,6 @@
 
 ## Overview
 
-![Architecture](./img/arch.svg)
 ![Network](./img/network.png)
 
 
