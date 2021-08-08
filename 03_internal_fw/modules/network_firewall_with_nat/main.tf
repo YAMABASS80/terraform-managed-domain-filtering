@@ -2,6 +2,7 @@ data "aws_subnet" "firewall_subnet_az_1" {
   id = var.firewall_subnet_az_1
 }
 
+/*
 data "aws_subnet" "public_subnet_az_1" {
   id = var.public_subnet_az_1
 }
@@ -9,6 +10,7 @@ data "aws_subnet" "public_subnet_az_1" {
 data "aws_subnet" "public_subnet_az_2" {
   id = var.public_subnet_az_2
 }
+*/
 
 # Network Firewall
 resource "aws_networkfirewall_firewall" "firewall" {
@@ -101,9 +103,11 @@ resource "aws_networkfirewall_rule_group" "default_stateful_group" {
   }
 }
 
+/*
 # Network Firewall Specific Routings
 resource "aws_route_table" "vpc_ingress_route_table" {
   vpc_id              = data.aws_subnet.firewall_subnet_az_1.vpc_id
+  
   route {
     cidr_block = data.aws_subnet.public_subnet_az_1.cidr_block
     vpc_endpoint_id = tolist(aws_networkfirewall_firewall.firewall.firewall_status[0].sync_states)[0].attachment[0].endpoint_id
@@ -116,12 +120,16 @@ resource "aws_route_table" "vpc_ingress_route_table" {
     Name = "vpc_ingress_rt"
   }
 }
+*/
 
+/*
 resource "aws_route_table_association" "vpc_ingress_route_table_association" {
   route_table_id = aws_route_table.vpc_ingress_route_table.id
   gateway_id  = var.igw_id
 }
+*/
 
+/*
 resource "aws_route" "public_subnet_1_to_fwgw" {
   route_table_id = var.public_subnet_1_route_table_id
   destination_cidr_block    = "0.0.0.0/0"
@@ -133,3 +141,4 @@ resource "aws_route" "public_subnet_2_to_fwgw" {
   destination_cidr_block    = "0.0.0.0/0"
   vpc_endpoint_id = tolist(aws_networkfirewall_firewall.firewall.firewall_status[0].sync_states)[1].attachment[0].endpoint_id
 }
+*/

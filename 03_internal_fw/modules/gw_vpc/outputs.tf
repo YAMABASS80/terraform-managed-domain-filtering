@@ -10,12 +10,14 @@ output "firewall_subnet_1_id" {
 output "firewall_subnet_2_id" {
   value = aws_subnet.firewall_subnet_2.id
 }
+/*
 output "public_subnet_1_id" {
   value = aws_subnet.public_subnet_1.id
 }
 output "public_subnet_2_id" {
   value = aws_subnet.public_subnet_2.id
 }
+*/
 output "private_subnet_1_id" {
   value = aws_subnet.private_subnet_1.id
 }
@@ -31,12 +33,14 @@ output "firewall_subnet_1_route_table_id" {
 output "firewall_subnet_2_route_table_id" {
   value = aws_route_table.firewall_subnet_2_route_table.id
 }
+/*
 output "public_subnet_1_route_table_id" {
   value = aws_route_table.public_subnet_1_route_table.id
 }
 output "public_subnet_2_route_table_id" {
   value = aws_route_table.public_subnet_2_route_table.id
 }
+*/
 output "private_subnet_1_route_table_id" {
   value = aws_route_table.private_subnet_1_route_table.id
 }
@@ -50,8 +54,8 @@ output route_table_ids{
   value=[
     aws_route_table.firewall_subnet_1_route_table.id,
     aws_route_table.firewall_subnet_2_route_table.id,
-    aws_route_table.public_subnet_1_route_table.id,
-    aws_route_table.public_subnet_2_route_table.id,
+    //aws_route_table.public_subnet_1_route_table.id,
+    //aws_route_table.public_subnet_2_route_table.id,
     aws_route_table.private_subnet_1_route_table.id,
     aws_route_table.private_subnet_2_route_table.id
   ]

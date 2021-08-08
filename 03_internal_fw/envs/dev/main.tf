@@ -42,10 +42,10 @@ module "network_firewall_with_nat" {
   igw_id = module.gw_vpc.igw_id
   firewall_subnet_az_1 = module.gw_vpc.firewall_subnet_1_id
   firewall_subnet_az_2 = module.gw_vpc.firewall_subnet_2_id
-  public_subnet_az_1 = module.gw_vpc.public_subnet_1_id
-  public_subnet_az_2 = module.gw_vpc.public_subnet_2_id
-  public_subnet_1_route_table_id = module.gw_vpc.public_subnet_1_route_table_id
-  public_subnet_2_route_table_id = module.gw_vpc.public_subnet_2_route_table_id
+  //public_subnet_az_1 = module.gw_vpc.public_subnet_1_id
+  //public_subnet_az_2 = module.gw_vpc.public_subnet_2_id
+  //public_subnet_1_route_table_id = module.gw_vpc.public_subnet_1_route_table_id
+  //public_subnet_2_route_table_id = module.gw_vpc.public_subnet_2_route_table_id
 }
 
 module "tgw" {
@@ -100,6 +100,7 @@ module routing_from_uservpc_to_gwvpc {
   depends_on = [module.user_A_attachment, module.user_B_attachment, module.gwvpc_attachment]
 }
 
+/*
 # routing from GW VPC to user VPC A
 module routing_from_gwvpc_to_user_A {
   source = "../../modules/routing"
@@ -123,3 +124,4 @@ module routing_from_gwvpc_to_user_B {
 
   depends_on = [module.user_B_attachment, module.gwvpc_attachment]
 }
+*/
